@@ -78,7 +78,7 @@ export const HOTEL_TIERS = [
       { text: 'Basic Breakfast Included', available: true },
       { text: 'Haram View', available: false },
     ],
-    price: 85,
+    price: 850,
     buttonText: 'Select Tier',
   },
   {
@@ -93,7 +93,7 @@ export const HOTEL_TIERS = [
       { text: 'Full Buffet Breakfast', available: true },
       { text: 'Partial Haram Views Available', available: true },
     ],
-    price: 150,
+    price: 1500,
     buttonText: 'Select Tier',
   },
   {
@@ -107,7 +107,7 @@ export const HOTEL_TIERS = [
       { text: 'Gourmet Dining Options', available: true },
       { text: 'Direct/Full Haram Views', available: true },
     ],
-    price: 300,
+    price: 3000,
     buttonText: 'Select Tier',
   },
 ]
@@ -161,7 +161,7 @@ export const CUSTOM_PACKAGES = [
       'Makkah: 50m from Haram',
       'Madinah: 100m from Haram',
     ],
-    price: '$4,250',
+    price: 'PKR4,250',
   },
   {
     id: 2,
@@ -178,6 +178,6 @@ export const CUSTOM_PACKAGES = [
       'Makkah: 500m from Haram',
       'Madinah: 300m from Haram',
     ],
-    price: '$2,800',
+    price: 'PKR2,800',
   },
 ]

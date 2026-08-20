@@ -203,17 +203,17 @@ export default function CheckoutPage() {
           <div>
             <h1 className="font-['Manrope'] font-extrabold text-2xl md:text-3xl text-white tracking-tight flex items-center gap-3">
               <span className="material-symbols-outlined text-[#f2ca50] text-3xl">lock</span>
-              Passenger Details &amp; Checkout
+              Passenger Details
             </h1>
-            <p className="text-xs md:text-sm text-[#d0c5af] mt-1">
+            {/* <p className="text-xs md:text-sm text-[#d0c5af] mt-1">
               Enter traveler details to place your unconfirmed order and proceed to Stripe payment
-            </p>
+            </p> */}
           </div>
 
-          <div className="flex items-center gap-2 text-xs bg-[#f2ca50]/10 border border-[#f2ca50]/30 text-[#f2ca50] px-3.5 py-1.5 rounded-full font-bold self-start md:self-auto">
+          {/* <div className="flex items-center gap-2 text-xs bg-[#f2ca50]/10 border border-[#f2ca50]/30 text-[#f2ca50] px-3.5 py-1.5 rounded-full font-bold self-start md:self-auto">
             <span className="material-symbols-outlined text-base">verified</span>
             Khaleel &middot; Stripe Checkout
-          </div>
+          </div> */}
         </div>
 
         {/* Empty Cart View */}
@@ -393,7 +393,7 @@ export default function CheckoutPage() {
                 <div className="pt-4 border-t border-white/10 flex items-baseline justify-between">
                   <div>
                     <p className="text-xs text-[#d0c5af] font-bold uppercase tracking-wider">Total Charge</p>
-                    <p className="text-[11px] text-[#f2ca50]">Stripe Secure Payment</p>
+                    {/* <p className="text-[11px] text-[#f2ca50]">Stripe Secure Payment</p> */}
                   </div>
                   <p className="font-['Manrope'] text-3xl font-extrabold text-[#f2ca50]">
                     {currencySymbol} {Number(grandTotal).toLocaleString()}
@@ -415,12 +415,12 @@ export default function CheckoutPage() {
                   {isProcessing ? (
                     <>
                       <div className="w-5 h-5 border-2 border-[#020617] border-t-transparent rounded-full animate-spin" />
-                      Redirecting to Stripe...
+                      Placing Order...
                     </>
                   ) : (
                     <>
                       <span className="material-symbols-outlined text-xl">open_in_new</span>
-                      Place Order &amp; Pay on Stripe
+                      Place &amp; Pay
                     </>
                   )}
                 </button>

@@ -83,7 +83,7 @@ export default function HotelTiers({ onSelectTier }) {
                 STARTING FROM
               </p>
               <p className="font-['Manrope'] text-3xl font-bold text-[#f2ca50] mb-4">
-                ${tier.price}{' '}
+                PKR{tier.price}{' '}
                 <span className="font-['Hanken_Grotesk'] text-sm text-[#d0c5af] font-normal">
                   / night
                 </span>

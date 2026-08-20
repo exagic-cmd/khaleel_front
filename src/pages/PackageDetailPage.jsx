@@ -314,14 +314,14 @@ export default function PackageDetailPage() {
                         </p>
                       </div>
 
-                      {productData.child_price && (
+                      {/* {productData.child_price && (
                         <div className="text-right text-xs text-[#d0c5af]">
                           <span>Child: </span>
                           <span className="font-bold text-white">
                             {productData.currency} ${productData.child_price}
                           </span>
                         </div>
-                      )}
+                      )} */}
                     </div>
 
                     <button
