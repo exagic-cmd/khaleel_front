@@ -27,7 +27,7 @@ export default function PackageDetailPage() {
     type: 'package',
   })
 
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://app-staging.airporttransfers.ai/api'
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://app.khaleel.ai/api'
 
   useEffect(() => {
     const fetchProductDetails = async () => {

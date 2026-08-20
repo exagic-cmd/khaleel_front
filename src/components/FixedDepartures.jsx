@@ -9,7 +9,7 @@ export default function FixedDepartures({ onSelectPackage }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://app-staging.airporttransfers.ai/api'
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://app.khaleel.ai/api'
   const mediaBaseUrl = import.meta.env.VITE_MEDIA_BASE_URL || 'https://smartdestinations-media.s3.ap-southeast-1.amazonaws.com/'
 
   useEffect(() => {
