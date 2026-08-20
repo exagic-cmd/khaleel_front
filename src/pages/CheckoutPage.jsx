@@ -39,7 +39,6 @@ export default function CheckoutPage() {
   const [aiQuery, setAiQuery] = useState('')
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://app.khaleel.ai/api'
-  const stripePaymentUrl = 'https://checkout.stripe.com/c/pay/cs_live_a12fciuk398kb53YKoxMDoYPI8Uujazib5UwgkSSIJWupz1x1Dw8tPw9vC#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdicGRmZGhqaWBTZHdsZGtxJz8nZmprcXdqaScpJ2R1bE5gfCc%2FJ3VuWmlsc2BaMDRWREFzSDdJa1BnYXxqa1FwdHR0N0JHbHA9QEFoQWB3QUliZkl2MmZCaWxmcDMzQG9yQG5obkpASlFIUktMVGdfa3FiRmByQWJsbXZnM2ZTalxmdWh9UkI1NUd3MlVBblJBJyknY3dqaFZgd3Ngdyc%2FcXdwYCknZ2RmbmJ3anBrYUZqaWp3Jz8nJjU1NTU1NScpJ2lkfGpwcVF8dWAnPyd2bGtiaWBabHFgaCcpJ2BrZGdpYFVpZGZgbWppYWB3dic%2FcXdwYHgl'
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -152,7 +151,7 @@ export default function CheckoutPage() {
       language_id: 1
     }
 
-    let redirectUrl = stripePaymentUrl
+    let redirectUrl = null
 
     try {
       const response = await fetch(`${apiBaseUrl}/create_new_order`, {
@@ -166,20 +165,50 @@ export default function CheckoutPage() {
       const json = await response.json()
       console.log('Unconfirmed order created:', json)
 
-      if (json?.url) {
+      const createdOrderId = json?.order_id || json?.data?.order_id || json?.id
+
+      if (createdOrderId) {
+        // Step 2: Create dynamic Stripe Checkout Session
+        const sessionResponse = await fetch(`${apiBaseUrl}/create-checkout-session`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            order_id: createdOrderId,
+            orderId: createdOrderId,
+            frontend_url: window.location.origin,
+          }),
+        })
+
+        const sessionJson = await sessionResponse.json()
+        console.log('Stripe session created:', sessionJson)
+
+        if (sessionJson?.url) {
+          redirectUrl = sessionJson.url
+        } else if (sessionJson?.checkout_url) {
+          redirectUrl = sessionJson.checkout_url
+        } else if (sessionJson?.data?.url) {
+          redirectUrl = sessionJson.data.url
+        }
+      } else if (json?.url) {
         redirectUrl = json.url
       } else if (json?.checkout_url) {
         redirectUrl = json.checkout_url
-      } else if (json?.data?.url) {
-        redirectUrl = json.data.url
+      } else if (json?.error) {
+        setOrderError(typeof json.error === 'string' ? json.error : 'Failed to create order.')
       }
     } catch (err) {
       console.warn('Order API request note:', err)
+      setOrderError(err.message || 'Error processing order.')
     } finally {
-      // Clear cart & redirect to Stripe payment URL
-      localStorage.removeItem('khaleel_cart')
-      window.dispatchEvent(new Event('cartUpdated'))
-      window.location.href = redirectUrl
+      if (redirectUrl) {
+        localStorage.removeItem('khaleel_cart')
+        window.dispatchEvent(new Event('cartUpdated'))
+        window.location.href = redirectUrl
+      } else {
+        setIsProcessing(false)
+      }
     }
   }
 
