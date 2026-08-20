@@ -116,6 +116,7 @@ export default function CheckoutPage() {
     }))
 
     const orderPayload = {
+      frontend_url: window.location.origin,
       cart_items: formattedCartItems,
       paxinfo: {
         email: email,
@@ -151,6 +152,8 @@ export default function CheckoutPage() {
       language_id: 1
     }
 
+    let redirectUrl = stripePaymentUrl
+
     try {
       const response = await fetch(`${apiBaseUrl}/create_new_order`, {
         method: 'POST',
@@ -162,13 +165,21 @@ export default function CheckoutPage() {
 
       const json = await response.json()
       console.log('Unconfirmed order created:', json)
+
+      if (json?.url) {
+        redirectUrl = json.url
+      } else if (json?.checkout_url) {
+        redirectUrl = json.checkout_url
+      } else if (json?.data?.url) {
+        redirectUrl = json.data.url
+      }
     } catch (err) {
       console.warn('Order API request note:', err)
     } finally {
       // Clear cart & redirect to Stripe payment URL
       localStorage.removeItem('khaleel_cart')
       window.dispatchEvent(new Event('cartUpdated'))
-      window.location.href = stripePaymentUrl
+      window.location.href = redirectUrl
     }
   }
 
