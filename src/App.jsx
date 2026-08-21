@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
 import HowItWorks from './components/HowItWorks'
@@ -146,6 +146,11 @@ export default function App() {
         <Route path="/package-tour/:slug/:id" element={<PackageDetailPage />} />
         <Route path="/booking/:id" element={<BookingPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/stripe/cancel" element={<Navigate to="/" replace />} />
+        <Route path="/stripe/cancel/*" element={<Navigate to="/" replace />} />
+        <Route path="/stripe/success" element={<Navigate to="/" replace />} />
+        <Route path="/stripe/success/*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <CartDrawer />
     </BrowserRouter>
